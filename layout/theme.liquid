@@ -27,6 +27,7 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
+    {{ 'lp-shared.css' | asset_url | stylesheet_tag }}
     {%- if template == 'product' -%}
       {{ 'lp-product.css' | asset_url | stylesheet_tag }}
       {{ 'lp-product.js' | asset_url | script_tag }}

@@ -32,58 +32,6 @@
 </section>
 
 <style>
-/* ─── Shared tokens ──────────────────────────────────────── */
-:root {
-  --lp-red: #ef4444;
-  --lp-red-dark: #dc2626;
-  --lp-black: #000;
-  --lp-zinc-950: #09090b;
-  --lp-zinc-900: #18181b;
-  --lp-zinc-800: #27272a;
-  --lp-zinc-400: #a1a1aa;
-  --lp-zinc-500: #71717a;
-  --lp-white: #fff;
-  --lp-gray-300: #d1d5db;
-  --lp-page-width: 1280px;
-  --lp-gutter: clamp(1rem, 5vw, 3rem);
-}
-
-/* ─── Shared utilities ───────────────────────────────────── */
-.lp-page-width {
-  max-width: var(--lp-page-width);
-  margin-inline: auto;
-  padding-inline: var(--lp-gutter);
-}
-
-.lp-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 2rem;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 2px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  white-space: nowrap;
-}
-.lp-btn--primary {
-  background: var(--lp-red);
-  color: var(--lp-white);
-  border-color: var(--lp-red);
-}
-.lp-btn--primary:hover { background: var(--lp-red-dark); border-color: var(--lp-red-dark); }
-.lp-btn--outline {
-  background: transparent;
-  color: var(--lp-white);
-  border-color: var(--lp-white);
-}
-.lp-btn--outline:hover { border-color: var(--lp-red); color: var(--lp-red); }
-
 /* ─── Hero section ───────────────────────────────────────── */
 .lp-hero {
   position: relative;
