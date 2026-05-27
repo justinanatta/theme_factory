@@ -1,0 +1,184 @@
+<section class="lp-hero" style="--lp-hero-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};">
+  <div class="lp-hero__media">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2000
+        | image_tag: class: 'lp-hero__image', loading: 'eager', fetchpriority: 'high', sizes: '100vw'
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'lp-hero__placeholder' }}
+    {%- endif -%}
+    <div class="lp-hero__overlay"></div>
+  </div>
+
+  <div class="lp-hero__content page-width">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="lp-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="lp-hero__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="lp-hero__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    <div class="lp-hero__ctas">
+      {%- if section.settings.cta_primary_label != blank -%}
+        <a href="{{ section.settings.cta_primary_url }}" class="lp-btn lp-btn--primary">
+          {{ section.settings.cta_primary_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_label != blank -%}
+        <a href="{{ section.settings.cta_secondary_url }}" class="lp-btn lp-btn--secondary">
+          {{ section.settings.cta_secondary_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="lp-hero__scroll-indicator" aria-hidden="true">
+    <div class="lp-hero__scroll-inner"></div>
+  </div>
+</section>
+
+<style>
+  .lp-hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+  }
+  .lp-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+  .lp-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .lp-hero__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+  .lp-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.4) 50%, #000);
+  }
+  .lp-hero__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    padding-inline: 1.5rem;
+  }
+  .lp-hero__eyebrow {
+    font-size: 0.8125rem;
+    letter-spacing: 0.3em;
+    color: #ef4444;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+  }
+  .lp-hero__heading {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin: 0 0 1.5rem;
+    color: #fff;
+  }
+  .lp-hero__subheading {
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    color: #d1d5db;
+    max-width: 40rem;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  .lp-hero__ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .lp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  .lp-btn--primary {
+    background: #ef4444;
+    color: #fff;
+    border: 2px solid #ef4444;
+  }
+  .lp-btn--primary:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+  }
+  .lp-btn--secondary {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  .lp-btn--secondary:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+  .lp-hero__scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1.5rem;
+    height: 2.5rem;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 9999px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0.375rem;
+    animation: lp-bounce 1.5s infinite;
+  }
+  .lp-hero__scroll-inner {
+    width: 0.25rem;
+    height: 0.5rem;
+    background: rgba(255,255,255,0.5);
+    border-radius: 9999px;
+  }
+  @keyframes lp-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP — Hero",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "label": "Overlay opacity", "default": 50 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "THE LEGEND RETURNS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "911 GT2 RS" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "The most powerful street-legal 911 ever built. Pure performance, uncompromising design." },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary CTA label", "default": "Book Test Drive" },
+    { "type": "url", "id": "cta_primary_url", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary CTA label", "default": "Explore Features" },
+    { "type": "url", "id": "cta_secondary_url", "label": "Secondary CTA link" }
+  ],
+  "presets": [{ "name": "LP — Hero" }]
+}
+{% endschema %}

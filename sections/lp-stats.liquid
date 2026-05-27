@@ -1,0 +1,129 @@
+<section class="lp-stats">
+  <div class="lp-stats__inner page-width">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="lp-stats__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lp-stats__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="lp-stats__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="lp-stats__grid">
+      {%- for block in section.blocks -%}
+        <div class="lp-stats__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <div class="lp-stats__icon">
+              {{ block.settings.icon }}
+            </div>
+          {%- endif -%}
+          <div class="lp-stats__value">{{ block.settings.value }}</div>
+          <div class="lp-stats__label">{{ block.settings.label }}</div>
+          {%- if block.settings.sublabel != blank -%}
+            <div class="lp-stats__sublabel">{{ block.settings.sublabel }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .lp-stats {
+    background: #09090b;
+    padding: 5rem 0;
+    color: #fff;
+  }
+  .lp-stats__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .lp-stats__heading {
+    font-size: clamp(2rem, 4vw, 3.125rem);
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #fff;
+  }
+  .lp-stats__subheading {
+    color: #9ca3af;
+    font-size: 1.125rem;
+    margin: 0;
+  }
+  .lp-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+  .lp-stats__card {
+    background: #18181b;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #27272a;
+    transition: border-color 0.2s;
+  }
+  .lp-stats__card:hover {
+    border-color: #ef4444;
+  }
+  .lp-stats__icon {
+    color: #ef4444;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+  .lp-stats__icon svg {
+    width: 3rem;
+    height: 3rem;
+    fill: #ef4444;
+  }
+  .lp-stats__value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .lp-stats__label {
+    color: #9ca3af;
+    font-size: 1rem;
+  }
+  .lp-stats__sublabel {
+    color: #71717a;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP — Stats",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Performance Unleashed" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Engineering excellence meets raw power" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon SVG" },
+        { "type": "text", "id": "value", "label": "Value", "default": "700 HP" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Maximum Power" },
+        { "type": "text", "id": "sublabel", "label": "Sub-label", "default": "@ 7,000 rpm" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP — Stats",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "700 HP", "label": "Maximum Power", "sublabel": "@ 7,000 rpm" } },
+        { "type": "stat", "settings": { "value": "2.7s", "label": "0-60 mph", "sublabel": "Launch control" } },
+        { "type": "stat", "settings": { "value": "211 mph", "label": "Top Speed", "sublabel": "Track proven" } },
+        { "type": "stat", "settings": { "value": "553 lb-ft", "label": "Peak Torque", "sublabel": "@ 4,000 rpm" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

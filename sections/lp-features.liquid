@@ -1,0 +1,144 @@
+<section class="lp-features">
+  <div class="lp-features__inner page-width">
+    <div class="lp-features__layout">
+      <div class="lp-features__text">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lp-features__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="lp-features__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <ul class="lp-features__list">
+            {%- for block in section.blocks -%}
+              <li class="lp-features__item" {{ block.shopify_attributes }}>
+                <span class="lp-features__bullet" aria-hidden="true"></span>
+                <div>
+                  <div class="lp-features__item-title">{{ block.settings.title }}</div>
+                  {%- if block.settings.description != blank -%}
+                    <div class="lp-features__item-desc">{{ block.settings.description }}</div>
+                  {%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+      <div class="lp-features__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 900
+            | image_tag: class: 'lp-features__image', loading: 'lazy', sizes: '(min-width: 768px) 50vw, 100vw'
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'lp-features__placeholder' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lp-features {
+    background: #000;
+    padding: 5rem 0;
+    color: #fff;
+  }
+  .lp-features__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (max-width: 767px) {
+    .lp-features__layout {
+      grid-template-columns: 1fr;
+    }
+  }
+  .lp-features__heading {
+    font-size: clamp(2rem, 4vw, 3.125rem);
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: #fff;
+  }
+  .lp-features__body {
+    color: #9ca3af;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .lp-features__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .lp-features__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  .lp-features__bullet {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    background: #ef4444;
+    border-radius: 50%;
+    margin-top: 0.5rem;
+  }
+  .lp-features__item-title {
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+  .lp-features__item-desc {
+    font-size: 0.875rem;
+    color: #71717a;
+  }
+  .lp-features__image {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    display: block;
+  }
+  .lp-features__placeholder {
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP — Features",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Precision Engineering" },
+    { "type": "richtext", "id": "body", "label": "Body text", "default": "<p>The 911 GT2 RS features a 3.8-liter twin-turbocharged flat-six engine, delivering unprecedented power through rear-wheel drive. Every component is meticulously crafted for maximum performance.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Side image" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Twin-Turbocharged Power" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Variable turbine geometry for instant response" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP — Features",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Twin-Turbocharged Power", "description": "Variable turbine geometry for instant response" } },
+        { "type": "feature", "settings": { "title": "7-Speed PDK Transmission", "description": "Lightning-fast gear changes" } },
+        { "type": "feature", "settings": { "title": "Rear-Axle Steering", "description": "Enhanced agility and stability" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
