@@ -75,3 +75,111 @@
     font-size: 2.5rem;
   }
 }
+
+/* ─── Price ─── */
+[data-template="product"] product-price {
+  color: var(--lp-white);
+}
+
+[data-template="product"] .price {
+  color: var(--lp-white);
+}
+
+[data-template="product"] .price-item--sale {
+  color: var(--lp-white);
+}
+
+[data-template="product"] .compare-at-price {
+  color: var(--lp-zinc-400);
+  text-decoration: line-through;
+}
+
+[data-template="product"] .tax-note,
+[data-template="product"] .installments {
+  color: var(--lp-zinc-500);
+  font-size: 0.8125rem;
+}
+
+/* ─── % OFF Badge (injected by lp-product.js) ─── */
+[data-template="product"] .lp-sale-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--lp-red);
+  color: var(--lp-white);
+  border-radius: 9999px;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.625rem;
+}
+
+/* ─── Variant Picker ─── */
+[data-template="product"] .variant-option__button-label {
+  background: var(--lp-zinc-900);
+  border: 1px solid var(--lp-zinc-800);
+  color: var(--lp-white);
+  transition: border-color 0.15s ease;
+}
+
+[data-template="product"] .variant-option__button-label:hover {
+  border-color: var(--lp-zinc-400);
+}
+
+[data-template="product"] input:checked + .variant-option__button-label {
+  border-color: var(--lp-red);
+  color: var(--lp-white);
+}
+
+[data-template="product"] input:disabled + .variant-option__button-label,
+[data-template="product"] .variant-option__button-label[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ─── Quantity Input ─── */
+[data-template="product"] .quantity__input,
+[data-template="product"] .quantity__button {
+  background: var(--lp-zinc-900);
+  border-color: var(--lp-zinc-800);
+  color: var(--lp-white);
+}
+
+[data-template="product"] .quantity__button:hover {
+  background: var(--lp-zinc-800);
+}
+
+/* ─── Add to Cart Button ─── */
+[data-template="product"] .product-form-buttons .button {
+  background: var(--lp-red);
+  border-color: var(--lp-red);
+  color: var(--lp-white);
+  border-radius: 2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: 100%;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+[data-template="product"] .product-form-buttons .button:hover:not([disabled]) {
+  background: var(--lp-red-dark);
+  border-color: var(--lp-red-dark);
+}
+
+/* Sold out / disabled state */
+[data-template="product"] .product-form-buttons .button[disabled] {
+  background: var(--lp-zinc-800);
+  border-color: var(--lp-zinc-800);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ─── Mobile ─── */
+@media screen and (max-width: 749px) {
+  [data-template="product"] .product-form-buttons .button {
+    padding-block: 1rem;
+    font-size: 1rem;
+  }
+}
