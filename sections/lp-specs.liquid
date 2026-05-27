@@ -1,15 +1,10 @@
 <section class="lp-specs">
-  <div class="lp-specs__inner page-width">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="lp-specs__heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
-
+  <div class="lp-specs__inner lp-page-width">
+    <h2 class="lp-specs__heading">{{ section.settings.heading }}</h2>
     <div class="lp-specs__grid">
       {%- for block in section.blocks -%}
-        <div class="lp-specs__table-wrap" {{ block.shopify_attributes }}>
-          {%- if block.settings.title != blank -%}
-            <h3 class="lp-specs__table-title">{{ block.settings.title }}</h3>
-          {%- endif -%}
+        <div class="lp-specs__table" {{ block.shopify_attributes }}>
+          <h3 class="lp-specs__table-title">{{ block.settings.title }}</h3>
           <div class="lp-specs__rows">
             {%- assign rows = block.settings.rows | split: '|' -%}
             {%- for row in rows -%}
@@ -29,61 +24,74 @@
 </section>
 
 <style>
-  .lp-specs {
-    background: #09090b;
-    padding: 5rem 0;
-    color: #fff;
-  }
-  .lp-specs__heading {
-    font-size: clamp(2rem, 4vw, 3.125rem);
-    font-weight: 700;
-    text-align: center;
-    margin: 0 0 3rem;
-    color: #fff;
-  }
-  .lp-specs__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-  .lp-specs__table-wrap {
-    background: #18181b;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    border: 1px solid #27272a;
-  }
-  .lp-specs__table-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ef4444;
-    margin: 0 0 1.5rem;
-  }
-  .lp-specs__rows {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .lp-specs__row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.875rem 0;
-    border-bottom: 1px solid #27272a;
-    gap: 1rem;
-  }
-  .lp-specs__row:last-child {
-    border-bottom: none;
-  }
-  .lp-specs__row-label {
-    color: #9ca3af;
-    font-size: 0.9375rem;
-  }
-  .lp-specs__row-value {
-    font-weight: 600;
-    color: #fff;
-    font-size: 0.9375rem;
-    text-align: right;
-  }
+.lp-specs {
+  background: var(--lp-zinc-950);
+  padding-block: clamp(3rem, 7vw, 5rem);
+  color: var(--lp-white);
+}
+.lp-specs__heading {
+  font-size: clamp(1.875rem, 4vw, 3.125rem);
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+  color: var(--lp-white);
+  line-height: 1.1;
+}
+.lp-specs__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+.lp-specs__table {
+  background: var(--lp-zinc-900);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: 0.5rem;
+  border: 1px solid var(--lp-zinc-800);
+}
+.lp-specs__table-title {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: var(--lp-red);
+  margin: 0 0 1.5rem;
+  line-height: 1.2;
+}
+.lp-specs__rows { display: flex; flex-direction: column; }
+.lp-specs__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.8125rem;
+  border-bottom: 1px solid var(--lp-zinc-800);
+}
+.lp-specs__row:last-child { border-bottom: none; padding-bottom: 0; }
+.lp-specs__row:first-child { padding-top: 0; }
+.lp-specs__row-label {
+  color: var(--lp-zinc-400);
+  font-size: 0.9375rem;
+  flex-shrink: 0;
+}
+.lp-specs__row-value {
+  font-weight: 600;
+  color: var(--lp-white);
+  font-size: 0.9375rem;
+  text-align: right;
+}
+
+/* ─── Breakpoints ─── */
+/* Tablet portrait (≤ 749px): stack tables */
+@media screen and (max-width: 749px) {
+  .lp-specs__grid { grid-template-columns: 1fr; }
+}
+/* Small phones (≤ 479px) */
+@media screen and (max-width: 479px) {
+  .lp-specs__row { flex-direction: column; gap: 0.25rem; }
+  .lp-specs__row-value { text-align: left; }
+}
+/* Large desktop (≥ 1400px) */
+@media screen and (min-width: 1400px) {
+  .lp-specs__grid { gap: 2.5rem; }
+}
 </style>
 
 {% schema %}
@@ -99,12 +107,7 @@
       "name": "Spec table",
       "settings": [
         { "type": "text", "id": "title", "label": "Table title", "default": "Engine & Performance" },
-        {
-          "type": "textarea",
-          "id": "rows",
-          "label": "Rows (format: Label: Value | Label: Value)",
-          "default": "Engine Type: 3.8L Twin-Turbo Flat-6|Displacement: 3,800 cc|Max Power: 700 HP @ 7,000 rpm|Max Torque: 553 lb-ft @ 4,000 rpm|Transmission: 7-Speed PDK"
-        }
+        { "type": "textarea", "id": "rows", "label": "Rows (Label: Value | Label: Value)", "default": "Engine Type: 3.8L Twin-Turbo Flat-6|Displacement: 3,800 cc|Max Power: 700 HP @ 7,000 rpm|Max Torque: 553 lb-ft @ 4,000 rpm|Transmission: 7-Speed PDK" }
       ]
     }
   ],
@@ -112,20 +115,8 @@
     {
       "name": "LP — Specs",
       "blocks": [
-        {
-          "type": "table",
-          "settings": {
-            "title": "Engine & Performance",
-            "rows": "Engine Type: 3.8L Twin-Turbo Flat-6|Displacement: 3,800 cc|Max Power: 700 HP @ 7,000 rpm|Max Torque: 553 lb-ft @ 4,000 rpm|Transmission: 7-Speed PDK"
-          }
-        },
-        {
-          "type": "table",
-          "settings": {
-            "title": "Chassis & Dimensions",
-            "rows": "Drivetrain: Rear-Wheel Drive|Weight: 3,241 lbs|Length: 179.6 in|Width: 74.0 in|Wheelbase: 96.5 in"
-          }
-        }
+        { "type": "table", "settings": { "title": "Engine & Performance", "rows": "Engine Type: 3.8L Twin-Turbo Flat-6|Displacement: 3,800 cc|Max Power: 700 HP @ 7,000 rpm|Max Torque: 553 lb-ft @ 4,000 rpm|Transmission: 7-Speed PDK" } },
+        { "type": "table", "settings": { "title": "Chassis & Dimensions", "rows": "Drivetrain: Rear-Wheel Drive|Weight: 3,241 lbs|Length: 179.6 in|Width: 74.0 in|Wheelbase: 96.5 in" } }
       ]
     }
   ]

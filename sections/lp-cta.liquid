@@ -1,78 +1,84 @@
 <section class="lp-cta">
-  {%- if section.settings.image != blank -%}
-    <div class="lp-cta__media">
-      {{
-        section.settings.image
-        | image_url: width: 2000
-        | image_tag: class: 'lp-cta__image', loading: 'lazy', sizes: '100vw'
-      }}
-      <div class="lp-cta__overlay"></div>
-    </div>
-  {%- endif -%}
-
-  <div class="lp-cta__content page-width">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="lp-cta__heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
-    {%- if section.settings.body != blank -%}
-      <p class="lp-cta__body">{{ section.settings.body }}</p>
-    {%- endif -%}
-    {%- if section.settings.button_label != blank -%}
-      <a href="{{ section.settings.button_url }}" class="lp-btn lp-btn--primary lp-btn--large">
-        {{ section.settings.button_label }}
-      </a>
-    {%- endif -%}
+  <div class="lp-cta__media">
+    <img
+      class="lp-cta__image"
+      src="{{ 'lp-cta-bg.jpg' | asset_url }}"
+      alt=""
+      loading="lazy"
+      width="2000"
+      height="1333"
+      aria-hidden="true"
+    >
+    <div class="lp-cta__overlay"></div>
+  </div>
+  <div class="lp-cta__content lp-page-width">
+    <h2 class="lp-cta__heading">{{ section.settings.heading }}</h2>
+    <p class="lp-cta__body">{{ section.settings.body }}</p>
+    <a href="{{ section.settings.button_url }}" class="lp-btn lp-btn--primary lp-btn--lg">
+      {{ section.settings.button_label }}
+    </a>
   </div>
 </section>
 
 <style>
-  .lp-cta {
-    position: relative;
-    padding: 8rem 0;
-    overflow: hidden;
-    background: #000;
-    color: #fff;
-  }
-  .lp-cta__media {
-    position: absolute;
-    inset: 0;
-  }
-  .lp-cta__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .lp-cta__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-  }
-  .lp-cta__content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 56rem;
-    margin-inline: auto;
-    padding-inline: 1.5rem;
-  }
-  .lp-cta__heading {
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 1.5rem;
-    line-height: 1.1;
-  }
-  .lp-cta__body {
-    font-size: 1.25rem;
-    color: #d1d5db;
-    margin: 0 0 2.5rem;
-    line-height: 1.7;
-  }
-  .lp-btn--large {
-    padding: 1rem 3rem;
-    font-size: 1.125rem;
-  }
+.lp-cta {
+  position: relative;
+  padding-block: clamp(4rem, 10vw, 8rem);
+  overflow: hidden;
+  background: var(--lp-black);
+  color: var(--lp-white);
+}
+.lp-cta__media {
+  position: absolute;
+  inset: 0;
+}
+.lp-cta__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+.lp-cta__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+}
+.lp-cta__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.lp-cta__heading {
+  font-size: clamp(1.875rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--lp-white);
+  margin: 0 0 1.25rem;
+  line-height: 1.1;
+  max-width: 22ch;
+  margin-inline: auto;
+  margin-bottom: 1.25rem;
+}
+.lp-cta__body {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--lp-gray-300);
+  margin: 0 auto 2.5rem;
+  max-width: 44ch;
+  line-height: 1.7;
+}
+.lp-btn--lg {
+  padding: 1rem 3rem;
+  font-size: 1rem;
+}
+
+/* ─── Breakpoints ─── */
+@media screen and (max-width: 479px) {
+  .lp-btn--lg { width: 100%; max-width: 300px; }
+  .lp-cta__image { object-position: 70% center; }
+}
+@media screen and (min-width: 1400px) {
+  .lp-cta__heading { font-size: 4.5rem; }
+}
 </style>
 
 {% schema %}
@@ -80,7 +86,6 @@
   "name": "LP — CTA Banner",
   "tag": "div",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Background image" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Experience Pure Racing DNA" },
     { "type": "textarea", "id": "body", "label": "Body", "default": "The GT2 RS isn't just a car. It's a statement. It's the pinnacle of what happens when racing technology meets street legality." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Schedule Your Test Drive" },

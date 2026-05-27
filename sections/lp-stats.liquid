@@ -1,24 +1,15 @@
 <section class="lp-stats">
-  <div class="lp-stats__inner page-width">
-    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="lp-stats__header">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="lp-stats__heading">{{ section.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="lp-stats__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
+  <div class="lp-stats__inner lp-page-width">
+    <div class="lp-stats__header">
+      <h2 class="lp-stats__heading">{{ section.settings.heading }}</h2>
+      <p class="lp-stats__subheading">{{ section.settings.subheading }}</p>
+    </div>
     <div class="lp-stats__grid">
       {%- for block in section.blocks -%}
         <div class="lp-stats__card" {{ block.shopify_attributes }}>
-          {%- if block.settings.icon != blank -%}
-            <div class="lp-stats__icon">
-              {{ block.settings.icon }}
-            </div>
-          {%- endif -%}
+          <div class="lp-stats__card-icon" aria-hidden="true">
+            {{- block.settings.icon -}}
+          </div>
           <div class="lp-stats__value">{{ block.settings.value }}</div>
           <div class="lp-stats__label">{{ block.settings.label }}</div>
           {%- if block.settings.sublabel != blank -%}
@@ -31,67 +22,85 @@
 </section>
 
 <style>
-  .lp-stats {
-    background: #09090b;
-    padding: 5rem 0;
-    color: #fff;
-  }
-  .lp-stats__header {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-  .lp-stats__heading {
-    font-size: clamp(2rem, 4vw, 3.125rem);
-    font-weight: 700;
-    margin: 0 0 1rem;
-    color: #fff;
-  }
-  .lp-stats__subheading {
-    color: #9ca3af;
-    font-size: 1.125rem;
-    margin: 0;
-  }
-  .lp-stats__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-  }
-  .lp-stats__card {
-    background: #18181b;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    border: 1px solid #27272a;
-    transition: border-color 0.2s;
-  }
-  .lp-stats__card:hover {
-    border-color: #ef4444;
-  }
-  .lp-stats__icon {
-    color: #ef4444;
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    line-height: 1;
-  }
-  .lp-stats__icon svg {
-    width: 3rem;
-    height: 3rem;
-    fill: #ef4444;
-  }
-  .lp-stats__value {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #fff;
-  }
-  .lp-stats__label {
-    color: #9ca3af;
-    font-size: 1rem;
-  }
-  .lp-stats__sublabel {
-    color: #71717a;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-  }
+.lp-stats {
+  background: var(--lp-zinc-950);
+  padding-block: clamp(3rem, 6vw, 5rem);
+  color: var(--lp-white);
+}
+.lp-stats__header {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 4rem);
+}
+.lp-stats__heading {
+  font-size: clamp(1.875rem, 4vw, 3.125rem);
+  font-weight: 700;
+  color: var(--lp-white);
+  margin: 0 0 0.75rem;
+  line-height: 1.1;
+}
+.lp-stats__subheading {
+  color: var(--lp-zinc-400);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  margin: 0;
+}
+.lp-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2vw, 2rem);
+}
+.lp-stats__card {
+  background: var(--lp-zinc-900);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: 0.5rem;
+  border: 1px solid var(--lp-zinc-800);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.lp-stats__card:hover {
+  border-color: var(--lp-red);
+  transform: translateY(-2px);
+}
+.lp-stats__card-icon {
+  color: var(--lp-red);
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+.lp-stats__card-icon svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: block;
+}
+.lp-stats__value {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--lp-white);
+  margin-bottom: 0.375rem;
+  line-height: 1;
+}
+.lp-stats__label {
+  color: var(--lp-zinc-400);
+  font-size: 0.9375rem;
+}
+.lp-stats__sublabel {
+  color: var(--lp-zinc-500);
+  font-size: 0.8125rem;
+  margin-top: 0.375rem;
+}
+
+/* ─── Breakpoints ─── */
+/* Tablet (≤ 749px): 2-col */
+@media screen and (max-width: 749px) {
+  .lp-stats__grid { grid-template-columns: repeat(2, 1fr); }
+}
+/* Small phones (≤ 479px): 1-col */
+@media screen and (max-width: 479px) {
+  .lp-stats__grid { grid-template-columns: 1fr; }
+  .lp-stats__card { display: flex; align-items: center; gap: 1rem; }
+  .lp-stats__card-icon { margin-bottom: 0; flex-shrink: 0; }
+}
+/* Large desktop (≥ 1400px) */
+@media screen and (min-width: 1400px) {
+  .lp-stats__grid { gap: 2.5rem; }
+}
 </style>
 
 {% schema %}
@@ -105,9 +114,14 @@
   "blocks": [
     {
       "type": "stat",
-      "name": "Stat",
+      "name": "Stat card",
       "settings": [
-        { "type": "html", "id": "icon", "label": "Icon SVG" },
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon SVG",
+          "default": "<svg viewBox='0 0 24 24' fill='currentColor'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z'\/><\/svg>"
+        },
         { "type": "text", "id": "value", "label": "Value", "default": "700 HP" },
         { "type": "text", "id": "label", "label": "Label", "default": "Maximum Power" },
         { "type": "text", "id": "sublabel", "label": "Sub-label", "default": "@ 7,000 rpm" }
@@ -118,10 +132,42 @@
     {
       "name": "LP — Stats",
       "blocks": [
-        { "type": "stat", "settings": { "value": "700 HP", "label": "Maximum Power", "sublabel": "@ 7,000 rpm" } },
-        { "type": "stat", "settings": { "value": "2.7s", "label": "0-60 mph", "sublabel": "Launch control" } },
-        { "type": "stat", "settings": { "value": "211 mph", "label": "Top Speed", "sublabel": "Track proven" } },
-        { "type": "stat", "settings": { "value": "553 lb-ft", "label": "Peak Torque", "sublabel": "@ 4,000 rpm" } }
+        {
+          "type": "stat",
+          "settings": {
+            "icon": "<svg viewBox='0 0 24 24' fill='currentColor'><path d='M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44zm-9.79 6.84a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z'\/><\/svg>",
+            "value": "700 HP",
+            "label": "Maximum Power",
+            "sublabel": "@ 7,000 rpm"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "icon": "<svg viewBox='0 0 24 24' fill='currentColor'><path d='M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'\/><\/svg>",
+            "value": "2.7s",
+            "label": "0-60 mph",
+            "sublabel": "Launch control"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "icon": "<svg viewBox='0 0 24 24' fill='currentColor'><path d='M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z'\/><\/svg>",
+            "value": "211 mph",
+            "label": "Top Speed",
+            "sublabel": "Track proven"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "icon": "<svg viewBox='0 0 24 24' fill='currentColor'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z'\/><\/svg>",
+            "value": "553 lb-ft",
+            "label": "Peak Torque",
+            "sublabel": "@ 4,000 rpm"
+          }
+        }
       ]
     }
   ]
