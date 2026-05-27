@@ -27,6 +27,10 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
+    {%- if template == 'product' -%}
+      {{ 'lp-product.css' | asset_url | stylesheet_tag }}
+      {{ 'lp-product.js' | asset_url | script_tag }}
+    {%- endif -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
