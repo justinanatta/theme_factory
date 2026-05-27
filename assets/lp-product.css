@@ -1,0 +1,77 @@
+/* ─── LP Product Page Overrides ────────────────────────────
+   All rules scoped to [data-template="product"] (the <main>
+   element on product pages). Depends on --lp-* tokens from
+   lp-shared.css which loads unconditionally.
+─────────────────────────────────────────────────────────── */
+
+/* Backgrounds */
+[data-template="product"] .section-background,
+[data-template="product"] .product-information {
+  background: var(--lp-black) !important;
+  color: var(--lp-white);
+}
+
+[data-template="product"] .product-details {
+  background: var(--lp-black);
+}
+
+/* Override Horizon color-scheme CSS tokens for product page */
+[data-template="product"] .product-information {
+  --color-background: var(--lp-black);
+  --color-foreground: var(--lp-white);
+  --color-border: var(--lp-zinc-800);
+}
+
+/* Sticky details — clear LP fixed nav (80px) */
+[data-template="product"] .product-details.sticky-content--desktop {
+  --sticky-header-offset: 80px;
+}
+
+/* Gallery background */
+[data-template="product"] .product-information__media {
+  background: var(--lp-black);
+}
+
+/* Dividers */
+[data-template="product"] .divider,
+[data-template="product"] hr {
+  border-color: var(--lp-zinc-800);
+  background: var(--lp-zinc-800);
+}
+
+/* ─── Title ─── */
+[data-template="product"] .product-details h1,
+[data-template="product"] .product-details .text-block h1 {
+  color: var(--lp-white);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ─── Description ─── */
+[data-template="product"] .text-block .rte,
+[data-template="product"] .text-block p {
+  color: var(--lp-zinc-400);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+[data-template="product"] .text-block .rte a {
+  color: var(--lp-red);
+  text-decoration: underline;
+}
+
+/* ─── Breakpoints ─── */
+@media screen and (max-width: 749px) {
+  [data-template="product"] .product-details {
+    padding-inline: var(--lp-gutter);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  [data-template="product"] .product-details h1,
+  [data-template="product"] .product-details .text-block h1 {
+    font-size: 2.5rem;
+  }
+}
